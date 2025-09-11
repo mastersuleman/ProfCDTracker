@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: Profession Cooldown Tracker
+## Notes: Tracks Mooncloth and Alchemy transmute cooldowns
+## Author: Namelus
+## Version: 1.0
+## SavedVariables: ProfCDTrackerDB
+ProfCDTracker.lua
