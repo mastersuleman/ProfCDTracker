@@ -9,4 +9,4 @@ Every 60 seconds, checks again and alerts you if one just became available.
 
 Alerts with yellow text in the middle of the screen and a soft Ready Check chime.
 
-Command /profcd shows the current status any time
+Command /profcd shows the current status any time.
