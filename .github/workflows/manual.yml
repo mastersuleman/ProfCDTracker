@@ -1,8 +1,5 @@
 name: Daily README update
 
-permissions:
-  contents: write
-
 on:
   schedule:
     - cron: "0 9 * * *"
@@ -11,11 +8,12 @@ on:
 jobs:
   update-readme:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       - name: Update README
         run: |
@@ -29,5 +27,11 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add README.md
-          git commit -m "Daily README update" || exit 0
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git HEAD:${{ github.ref_name }}
+          git commit -m "Daily README update" || echo "no changes to commit"
+
+          BRANCH=${GITHUB_REF#refs/heads/}
+
+          git fetch origin ${BRANCH}
+          git merge --ff-only origin/${BRANCH} || { echo "Remote has new commits; skipping push"; exit 0; }
+
+          git push origin HEAD:${BRANCH}
